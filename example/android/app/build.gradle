@@ -20,41 +20,57 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+def flutterMinSdkVersion = localProperties.getProperty('flutter.flutterMinSdkVersion')
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = '16'
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.flutterTargetSdkVersion')
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = '31'
+}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-    }
-
-    lintOptions {
-        disable 'InvalidPackage'
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.ekodemy.eko_jitsi_example"
         minSdkVersion 23 //Required for Jitsi
-        targetSdkVersion 29
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+    signingConfigs{
 
-            // Add below 3 lines for proguard
-            minifyEnabled true
-            useProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        buildTypes {
+            debug {
+                signingConfig signingConfigs.debug
+                minifyEnabled false
+                shrinkResources false
+                // useProguard true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
         }
     }
 }
@@ -65,4 +81,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
 }
+

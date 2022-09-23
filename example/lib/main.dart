@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:eko_jitsi/feature_flag/feature_flag_enum.dart';
 import 'package:eko_jitsi/eko_jitsi.dart';
 import 'package:eko_jitsi/eko_jitsi_listener.dart';
+import 'package:eko_jitsi/feature_flag/feature_flag_enum.dart';
 import 'package:eko_jitsi/room_name_constraint.dart';
 import 'package:eko_jitsi/room_name_constraint_type.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -139,7 +139,9 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(
                   height: 64.0,
                   width: double.maxFinite,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                     onPressed: () {
                       _joinMeeting();
                     },
@@ -147,7 +149,6 @@ class _MyAppState extends State<MyApp> {
                       "Join Meeting",
                       style: TextStyle(color: Colors.white),
                     ),
-                    color: Colors.blue,
                   ),
                 ),
                 SizedBox(
