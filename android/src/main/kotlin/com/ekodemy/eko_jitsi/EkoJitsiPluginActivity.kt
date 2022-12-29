@@ -85,7 +85,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
             EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
             // Picture-in-Picture mode has been closed, we can (should !) end the call
-            getJitsiView().leave()
+            getJitsiView().dispose()
         }
     }
 
@@ -158,17 +158,17 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         if(true){
             return;
         }
-        try {
-            var jitsiView: JitsiMeetView = jitsiView;
-            Log.d(EKO_JITSI_TAG, "ABC " + jitsiView.javaClass.canonicalName);
-            var ab = jitsiView.getRootReactView(jitsiView);
-            Log.d(EKO_JITSI_TAG, "ABC " + ab.javaClass.canonicalName);
-            var rootReactView: ReactRootView = ab as ReactRootView;
-            Log.d(EKO_JITSI_TAG, "ABC " + rootReactView.javaClass.canonicalName);
-            logContentView(rootReactView.rootViewGroup, "");
-        } catch (ex: Exception) {
-            Log.e(EKO_JITSI_TAG, "ABC Error", ex);
-        }
+//        try {
+//            var jitsiView: JitsiMeetView = jitsiView;
+//            Log.d(EKO_JITSI_TAG, "ABC " + jitsiView.javaClass.canonicalName);
+//            var ab = jitsiView.getRootReactView(jitsiView);
+//            Log.d(EKO_JITSI_TAG, "ABC " + ab.javaClass.canonicalName);
+//            var rootReactView: ReactRootView = ab as ReactRootView;
+//            Log.d(EKO_JITSI_TAG, "ABC " + rootReactView.javaClass.canonicalName);
+//            logContentView(rootReactView.rootViewGroup, "");
+//        } catch (ex: Exception) {
+//            Log.e(EKO_JITSI_TAG, "ABC Error", ex);
+//        }
 //        var jitsiFragment: Fragment? = getSupportFragmentManager().findFragmentById(R.id.jitsiFragment);
     }
 
@@ -224,7 +224,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
                 alert.setTitle("Whiteboard")
 
                 val wv = WebView(this)
-                wv.loadUrl(whiteboardUrl)
+                wv.loadUrl(whiteboardUrl!!)
                 wv.webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                         view.loadUrl(url)
@@ -313,14 +313,14 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
     }
 }
 
-fun BaseReactView<JitsiMeetViewListener>.getRootReactView(view: JitsiMeetView): Any {
-
-    return BaseReactView::class.java.getDeclaredField("reactRootView").let {
-        it.isAccessible = true;
-        val value = it.get(view);
-        //todo
-        return@let value;
-    }
-}
+//fun BaseReactView<JitsiMeetViewListener>.getRootReactView(view: JitsiMeetView): Any {
+//
+//    return BaseReactView::class.java.getDeclaredField("reactRootView").let {
+//        it.isAccessible = true;
+//        val value = it.get(view);
+//        //todo
+//        return@let value;
+//    }
+//}
 //    return this.reactRootView;
 
