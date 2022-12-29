@@ -6,23 +6,25 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 rootProject.allprojects {
     repositories {
+        google()
+        mavenCentral()
+        jcenter()
         maven {
             url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }
          // Required, otherwise a dependency of jisti sdk will not be found.
         maven { url 'https://www.jitpack.io' }
-        google()
-        jcenter()
     }
 }
 
@@ -38,6 +40,11 @@ android {
     defaultConfig {
         minSdkVersion 23
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    
     lintOptions {
         disable 'InvalidPackage'
     }
