@@ -5,7 +5,6 @@ buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {
         google()
-        mavenCentral()
     }
 
     dependencies {
@@ -39,9 +38,6 @@ android {
         minSdkVersion 23
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 
     lintOptions {
         disable 'InvalidPackage'
@@ -57,6 +53,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Jitsi Meet from https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:6.1.0') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:7.0.1') { transitive = true }
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
 }
