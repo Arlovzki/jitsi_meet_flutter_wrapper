@@ -5,6 +5,7 @@ buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {
         google()
+        jcenter()
     }
 
     dependencies {
@@ -17,6 +18,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        jcenter()
         maven {
             url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }
