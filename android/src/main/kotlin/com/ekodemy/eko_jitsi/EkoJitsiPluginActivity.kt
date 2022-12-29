@@ -82,6 +82,8 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             this.ekoLayout!!.setVisibility(LinearLayout.VISIBLE);
         }
         if (isInPictureInPictureMode == false && onStopCalled) {
+
+            EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
             // Picture-in-Picture mode has been closed, we can (should !) end the call
             getJitsiView().leave()
         }
