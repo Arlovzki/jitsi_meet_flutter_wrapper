@@ -15,12 +15,12 @@ class EkoJitsiEventStreamHandler private constructor(): EventChannel.StreamHandl
 
     private var eventSink: EventChannel.EventSink? = null
 
-    fun onListen(arguments: Any?, eventSink: EventChannel.EventSink?) {
+    override  fun onListen(arguments: Any?, eventSink: EventChannel.EventSink?) {
         Log.d(EKO_JITSI_TAG, "EkoJitsiEventStreamHandler.onListen")
         this.eventSink = eventSink
     }
 
-     fun onCancel(arguments: Any?) {
+    override  fun onCancel(arguments: Any?) {
         Log.d(EKO_JITSI_TAG, "EkoJitsiEventStreamHandler.onCancel")
         eventSink = null
     }
@@ -72,5 +72,5 @@ class EkoJitsiEventStreamHandler private constructor(): EventChannel.StreamHandl
         data?.put("event", "onWhiteboardClicked")
         eventSink?.success(data)
     }
-    
+
 }
