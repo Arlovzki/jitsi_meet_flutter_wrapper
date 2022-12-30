@@ -153,7 +153,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
-        prepareWhiteboardLayout(layout);
+//        prepareWhiteboardLayout(layout);
 
     }
 
@@ -175,86 +175,86 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 //        var jitsiFragment: Fragment? = getSupportFragmentManager().findFragmentById(R.id.jitsiFragment);
     }
 
-    fun prepareWhiteboardLayout(layout: LinearLayout) {
-        this.ekoLayout = LinearLayout(this);
-        this.ekoLayout!!.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        this.ekoLayout!!.setPadding(25, 25, 25, 25)
-
-        this.ekoLayout!!.gravity = Gravity.LEFT;
-        var logoParentlayout: LinearLayout = LinearLayout(this);
-        logoParentlayout.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        logoParentlayout.gravity = Gravity.LEFT;
-        val logoImage = ImageView(this);
-        //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
-        if (EkoJitsiPluginActivity.classroomLogoId != null) {
-            logoImage.setImageResource(EkoJitsiPluginActivity.classroomLogoId!!);
-        }
-        logoImage.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            100
-        );
-        logoImage.id = View.generateViewId();
-        logoImage.scaleType = ImageView.ScaleType.FIT_START;
-        logoImage.adjustViewBounds = true;
-
-        var btnParentlayout: LinearLayout = LinearLayout(this);
-        btnParentlayout.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        btnParentlayout.gravity = Gravity.RIGHT;
-
-        val btnTag = Button(this)
-        btnTag.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            100
-        );
-        btnTag.text = "Whiteboard";
-        btnTag.id = View.generateViewId();
-        btnTag.setBackgroundColor(Color.BLACK);
-        if (EkoJitsiPluginActivity.whiteboardUrl != null) {
-            btnTag.setTextColor(Color.WHITE);
-            btnTag.setOnClickListener {
-                EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
-//                Toast.makeText(this, "Whiteboard", Toast.LENGTH_SHORT).show()
-                val alert: AlertDialog.Builder = AlertDialog.Builder(this)
-                alert.setTitle("Whiteboard")
-
-                val wv = WebView(this)
-                wv.loadUrl(whiteboardUrl!!)
-                wv.webViewClient = object : WebViewClient() {
-                    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                        view.loadUrl(url)
-                        return true
-                    }
-                }
-                wv.settings.javaScriptEnabled = true;
-                wv.settings.javaScriptCanOpenWindowsAutomatically = true;
-                wv.settings.domStorageEnabled = true;
-
-                alert.setView(wv)
-                alert.setNegativeButton("Close",
-                    DialogInterface.OnClickListener { dialog, id -> dialog.dismiss() });
-                alert.show()
-            }
-
-        } else {
-            btnTag.setTextColor(Color.BLACK);
-        }
-
-        layout.setBackgroundColor(Color.BLACK);
-        logoParentlayout.addView(logoImage);
-        btnParentlayout.addView(btnTag);
-        this.ekoLayout!!.addView(logoParentlayout);
-        this.ekoLayout!!.addView(btnParentlayout);
-        layout.addView(ekoLayout, 0);
-    }
+//    fun prepareWhiteboardLayout(layout: LinearLayout) {
+//        this.ekoLayout = LinearLayout(this);
+//        this.ekoLayout!!.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        );
+//        this.ekoLayout!!.setPadding(25, 25, 25, 25)
+//
+//        this.ekoLayout!!.gravity = Gravity.LEFT;
+//        var logoParentlayout: LinearLayout = LinearLayout(this);
+//        logoParentlayout.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        );
+//        logoParentlayout.gravity = Gravity.LEFT;
+//        val logoImage = ImageView(this);
+//        //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
+//        if (EkoJitsiPluginActivity.classroomLogoId != null) {
+//            logoImage.setImageResource(EkoJitsiPluginActivity.classroomLogoId!!);
+//        }
+//        logoImage.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            100
+//        );
+//        logoImage.id = View.generateViewId();
+//        logoImage.scaleType = ImageView.ScaleType.FIT_START;
+//        logoImage.adjustViewBounds = true;
+//
+//        var btnParentlayout: LinearLayout = LinearLayout(this);
+//        btnParentlayout.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        );
+//        btnParentlayout.gravity = Gravity.RIGHT;
+//
+//        val btnTag = Button(this)
+//        btnTag.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            100
+//        );
+//        btnTag.text = "Whiteboard";
+//        btnTag.id = View.generateViewId();
+//        btnTag.setBackgroundColor(Color.BLACK);
+//        if (EkoJitsiPluginActivity.whiteboardUrl != null) {
+//            btnTag.setTextColor(Color.WHITE);
+//            btnTag.setOnClickListener {
+//                EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
+////                Toast.makeText(this, "Whiteboard", Toast.LENGTH_SHORT).show()
+//                val alert: AlertDialog.Builder = AlertDialog.Builder(this)
+//                alert.setTitle("Whiteboard")
+//
+//                val wv = WebView(this)
+//                wv.loadUrl(whiteboardUrl!!)
+//                wv.webViewClient = object : WebViewClient() {
+//                    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+//                        view.loadUrl(url)
+//                        return true
+//                    }
+//                }
+//                wv.settings.javaScriptEnabled = true;
+//                wv.settings.javaScriptCanOpenWindowsAutomatically = true;
+//                wv.settings.domStorageEnabled = true;
+//
+//                alert.setView(wv)
+//                alert.setNegativeButton("Close",
+//                    DialogInterface.OnClickListener { dialog, id -> dialog.dismiss() });
+//                alert.show()
+//            }
+//
+//        } else {
+//            btnTag.setTextColor(Color.BLACK);
+//        }
+//
+//        layout.setBackgroundColor(Color.BLACK);
+//        logoParentlayout.addView(logoImage);
+//        btnParentlayout.addView(btnTag);
+//        this.ekoLayout!!.addView(logoParentlayout);
+//        this.ekoLayout!!.addView(btnParentlayout);
+//        layout.addView(ekoLayout, 0);
+//    }
 
     fun logContentView(parent: View, indent: String) {
         if (parent is ReactViewGroup) {
