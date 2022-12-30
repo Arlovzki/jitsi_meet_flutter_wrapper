@@ -88,7 +88,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
                     = HashMap<String, Any> ()
             data?.put("event", "onConferenceTerminated")
 
-            super.onConferenceTerminated(data)
+            EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
         }
     }
 
