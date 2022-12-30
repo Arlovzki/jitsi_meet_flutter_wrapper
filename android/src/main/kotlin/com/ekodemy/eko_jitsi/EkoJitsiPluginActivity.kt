@@ -89,6 +89,8 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             data?.put("event", "onConferenceTerminated")
 
             EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
+            super.onConferenceTerminated(data);
+
         }
     }
 
@@ -98,6 +100,19 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
                 EKO_JITSI_CLOSE -> finish()
             }
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        onStopCalled = true;
+
+        var data : HashMap<String, Any>
+                = HashMap<String, Any> ()
+        data?.put("event", "onConferenceTerminated")
+
+        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
+
+        unregisterReceiver(myReceiver)
     }
 
     override fun onStop() {
@@ -250,8 +265,8 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
         layout.setBackgroundColor(Color.BLACK);
         logoParentlayout.addView(logoImage);
-        btnParentlayout.addView(btnTag);
-        this.ekoLayout!!.addView(logoParentlayout);
+//        btnParentlayout.addView(btnTag);
+//        this.ekoLayout!!.addView(logoParentlayout);
 //        this.ekoLayout!!.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
