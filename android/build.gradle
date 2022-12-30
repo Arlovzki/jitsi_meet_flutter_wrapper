@@ -22,7 +22,7 @@ rootProject.allprojects {
         }
         google()
         jcenter()
-        // Required, otherwise a dependency of jisti sdk will not be found.
+        // Required, otherwise a dependency of jitsi sdk will not be found.
         maven { url 'https://www.jitpack.io' }
     }
 }
@@ -31,7 +31,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

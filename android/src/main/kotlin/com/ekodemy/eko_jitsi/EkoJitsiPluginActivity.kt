@@ -82,8 +82,13 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             this.ekoLayout!!.setVisibility(LinearLayout.VISIBLE);
         }
         if (isInPictureInPictureMode == false && onStopCalled) {
-            EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
             // Picture-in-Picture mode has been closed, we can (should !) end the call
+
+            var data : HashMap<String, Any>
+                    = HashMap<String, Any> ()
+            data?.put("event", "onPictureInPictureTerminated")
+
+            this.onConferenceTerminated(data);
         }
     }
 
