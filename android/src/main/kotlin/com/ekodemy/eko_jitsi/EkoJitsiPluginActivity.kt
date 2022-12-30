@@ -81,14 +81,14 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
             this.ekoLayout!!.setVisibility(LinearLayout.VISIBLE);
         }
-        if (isInPictureInPictureMode == false && onStopCalled) {
+        if (!isInPictureInPictureMode && onStopCalled) {
             // Picture-in-Picture mode has been closed, we can (should !) end the call
 
-            var data : HashMap<String, Any>
-                    = HashMap<String, Any> ()
-            data?.put("event", "onConferenceTerminated")
-
-            EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
+//            var data : HashMap<String, Any>
+//                    = HashMap<String, Any> ()
+//            data?.put("event", "onConferenceTerminated")
+//
+//            EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
         }
     }
 
