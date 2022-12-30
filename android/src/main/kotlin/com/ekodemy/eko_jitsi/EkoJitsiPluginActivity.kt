@@ -4,23 +4,27 @@ package com.ekodemy.eko_jitsi
 import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.content.*
-import android.content.BroadcastReceiver
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
-import com.facebook.react.ReactRootView
 import com.facebook.react.views.text.ReactTextView
 import com.facebook.react.views.view.ReactViewGroup
-import org.jitsi.meet.sdk.*
-import java.util.*
+import org.jitsi.meet.sdk.BroadcastEvent
+import org.jitsi.meet.sdk.JitsiMeetActivity
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 
 
 /**
@@ -99,16 +103,22 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             when (intent?.action) {
                 EKO_JITSI_CLOSE -> finish()
             }
+            val event = BroadcastEvent(intent);
+
+            when(event.type){
+                BroadcastEvent.Type.READY_TO_CLOSE -> finish()
+            }
+
         }
     }
 
     override fun finish() {
 
-//        var data : HashMap<String, Any>
-//                = HashMap<String, Any> ()
-//        data?.put("event", "onConferenceTerminated")
-//
-//        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
+        var data : HashMap<String, Any>
+                = HashMap<String, Any> ()
+        data?.put("event", "onConferenceTerminated")
+
+        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
 
         super.finish()
     }
@@ -166,7 +176,10 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
-        prepareWhiteboardLayout(layout);
+
+        this.ekoLayout = LinearLayout(this);
+
+        layout.addView(ekoLayout, 0);
 
     }
 
@@ -210,11 +223,11 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         }
         logoImage.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            100
+            20
         );
-        logoImage.id = View.generateViewId();
-        logoImage.scaleType = ImageView.ScaleType.FIT_START;
-        logoImage.adjustViewBounds = true;
+//        logoImage.id = View.generateViewId();
+//        logoImage.scaleType = ImageView.ScaleType.FIT_START;
+//        logoImage.adjustViewBounds = true;
 
         var btnParentlayout: LinearLayout = LinearLayout(this);
         btnParentlayout.layoutParams = LinearLayout.LayoutParams(
@@ -224,10 +237,10 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         btnParentlayout.gravity = Gravity.RIGHT;
 
         val btnTag = Button(this)
-        btnTag.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            100
-        );
+//        btnTag.layoutParams = LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            100
+//        );
         btnTag.text = "Whiteboard";
         btnTag.id = View.generateViewId();
         btnTag.setBackgroundColor(Color.BLACK);
@@ -262,7 +275,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         }
 
         layout.setBackgroundColor(Color.BLACK);
-        logoParentlayout.addView(logoImage);
+//        logoParentlayout.addView(logoImage);
 //        btnParentlayout.addView(btnTag);
 //        this.ekoLayout!!.addView(logoParentlayout);
 //        this.ekoLayout!!.addView(btnParentlayout);

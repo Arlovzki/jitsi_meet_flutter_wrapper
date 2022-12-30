@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:eko_jitsi/eko_jitsi.dart';
-import 'package:eko_jitsi/eko_jitsi_listener.dart';
-import 'package:eko_jitsi/feature_flag/feature_flag_enum.dart';
-import 'package:eko_jitsi/room_name_constraint.dart';
-import 'package:eko_jitsi/room_name_constraint_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jitsi_meet_flutter_wrapper/eko_jitsi.dart';
+import 'package:jitsi_meet_flutter_wrapper/eko_jitsi_listener.dart';
+import 'package:jitsi_meet_flutter_wrapper/feature_flag/feature_flag_enum.dart';
+import 'package:jitsi_meet_flutter_wrapper/room_name_constraint.dart';
+import 'package:jitsi_meet_flutter_wrapper/room_name_constraint_type.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +16,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final serverText = TextEditingController();
+  final serverText =
+      TextEditingController(text: "https://jitsi-poc.ecvphdevs.com");
   final roomText = TextEditingController(text: "plugintestroom");
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final nameText = TextEditingController(text: "Plugin Test User");
@@ -24,6 +25,8 @@ class _MyAppState extends State<MyApp> {
   var isAudioOnly = true;
   var isAudioMuted = true;
   var isVideoMuted = true;
+
+  bool onCall = false;
 
   @override
   void initState() {
@@ -52,111 +55,122 @@ class _MyAppState extends State<MyApp> {
           padding: const EdgeInsets.symmetric(
             horizontal: 16.0,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 24.0,
-                ),
-                TextField(
-                  controller: serverText,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Server URL",
-                      hintText: "Hint: Leave empty for meet.jitsi.si"),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                TextField(
-                  controller: roomText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Room",
+          child: onCall
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 20),
+                      Text('Meeting in progress')
+                    ],
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      TextField(
+                        controller: serverText,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Server URL",
+                            hintText: "Hint: Leave empty for meet.jitsi.si"),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextField(
+                        controller: roomText,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Room",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextField(
+                        controller: subjectText,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Subject",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextField(
+                        controller: nameText,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Display Name",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextField(
+                        controller: emailText,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Email",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      CheckboxListTile(
+                        title: Text("Audio Only"),
+                        value: isAudioOnly,
+                        onChanged: _onAudioOnlyChanged,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      CheckboxListTile(
+                        title: Text("Audio Muted"),
+                        value: isAudioMuted,
+                        onChanged: _onAudioMutedChanged,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      CheckboxListTile(
+                        title: Text("Video Muted"),
+                        value: isVideoMuted,
+                        onChanged: _onVideoMutedChanged,
+                      ),
+                      Divider(
+                        height: 48.0,
+                        thickness: 2.0,
+                      ),
+                      SizedBox(
+                        height: 64.0,
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue),
+                          onPressed: () {
+                            _joinMeeting();
+                          },
+                          child: Text(
+                            "Join Meeting",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 48.0,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                TextField(
-                  controller: subjectText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Subject",
-                  ),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                TextField(
-                  controller: nameText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Display Name",
-                  ),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                TextField(
-                  controller: emailText,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Email",
-                  ),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Audio Only"),
-                  value: isAudioOnly,
-                  onChanged: _onAudioOnlyChanged,
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Audio Muted"),
-                  value: isAudioMuted,
-                  onChanged: _onAudioMutedChanged,
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                CheckboxListTile(
-                  title: Text("Video Muted"),
-                  value: isVideoMuted,
-                  onChanged: _onVideoMutedChanged,
-                ),
-                Divider(
-                  height: 48.0,
-                  thickness: 2.0,
-                ),
-                SizedBox(
-                  height: 64.0,
-                  width: double.maxFinite,
-                  child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                    onPressed: () {
-                      _joinMeeting();
-                    },
-                    child: Text(
-                      "Join Meeting",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 48.0,
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
@@ -249,10 +263,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onConferenceJoined({message}) {
+    setState(() {
+      onCall = true;
+    });
     debugPrint("_onConferenceJoined broadcasted with message: $message");
   }
 
   void _onConferenceTerminated({message}) {
+    setState(() {
+      onCall = false;
+    });
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
   }
 

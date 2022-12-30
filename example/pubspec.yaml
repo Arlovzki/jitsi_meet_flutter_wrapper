@@ -5,13 +5,13 @@ publish_to: 'none'
 
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  eko_jitsi:
+  jitsi_meet_flutter_wrapper:
     path: ../
   shared_preferences: ^2.0.5
   modal_bottom_sheet: ^2.0.0
