@@ -103,11 +103,12 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
     }
 
     override fun finish() {
-        var data : HashMap<String, Any>
-                = HashMap<String, Any> ()
-        data?.put("event", "onConferenceTerminated")
 
-        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
+//        var data : HashMap<String, Any>
+//                = HashMap<String, Any> ()
+//        data?.put("event", "onConferenceTerminated")
+//
+//        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data);
 
         super.finish()
     }
