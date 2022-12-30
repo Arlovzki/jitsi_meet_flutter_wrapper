@@ -252,7 +252,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         logoParentlayout.addView(logoImage);
         btnParentlayout.addView(btnTag);
         this.ekoLayout!!.addView(logoParentlayout);
-        this.ekoLayout!!.addView(btnParentlayout);
+//        this.ekoLayout!!.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
 
