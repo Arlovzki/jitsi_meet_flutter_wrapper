@@ -86,9 +86,9 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
             var data : HashMap<String, Any>
                     = HashMap<String, Any> ()
-            data?.put("event", "onPictureInPictureTerminated")
+            data?.put("event", "onConferenceTerminated")
 
-            this.onConferenceTerminated(data);
+            super.onConferenceTerminated(data)
         }
     }
 

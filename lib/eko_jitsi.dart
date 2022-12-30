@@ -185,7 +185,7 @@ class EkoJitsi {
   /// Sends a broadcast to per meeting listeners added during joinMeeting
   static void _broadcastToPerMeetingListeners(message) {
     String? url = message['url'];
-    final listener = _perMeetingListeners[url!];
+    final listener = _perMeetingListeners[url ?? ''];
     if (listener != null) {
       switch (message['event']) {
         case "onConferenceWillJoin":
