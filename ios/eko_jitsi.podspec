@@ -3,7 +3,7 @@
 # Run `pod lib lint eko_jitsi.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'eko_jitsi'
+  s.name             = 'jitsi_meet_flutter_wrapper'
   s.version          = '0.0.1'
   s.summary          = 'Jitsi Meet Plugin'
   s.description      = <<-DESC
